@@ -1,0 +1,30 @@
+language: node_js
+
+node_js:
+  - 6
+
+env:
+  global:
+    - GH_REF: github.com/vaeum/react-redux-router4-webpack2.git
+    - secure: Vf37P5W02Sa6+X29HNoPkvPMB1j6nazLUauyauSDkCRe5hoBwDbBbrYJmqMDwXBkjOyuPINAgktiOC1pwXTh36peFXRf+RZmkuBxD2TxksL0b/cUNpMCUysTAw1m9bUCEZv8U8Dsd6Uz9IWgF+aQr+iPq3RgK0EwMuew9zjF3CUMNr9VSU2F181q1ye4N0IPvJPO/9jq92A0OXZ1epZ69JCAFp4uR8WMPJ6h25k3t4jJBRji2TEuce5Q+EdTCbmi9GSL1BbGFy8027yTWPhLFDFlzRPSO74oJUUVUwC+2KbammSuHQzF1ttvDFnS524TcvhYk8Vw0AvSdWCkN1C7wBSxi0ksjH3sjlwuN0Xv/Y2ievYoUQxhcMEc52qGfsyp2xIeHoBPcogBjG1ODJdz3ZNvo4HFc/UtR/vUxsHUY2VLqjyb/7zYffl1Z2YYgROkJUyIPhvELMIaxpcoCo8+jFdyVMj/Q+oyK8jM3MHK51MkwFLPCdriTok6MLoqRH3sYbn5AmittRcpIEp1C4D0DO8ziAiH7Lf8SKdGQGN3AbjIvBmE++GBUkr7Cau7QXGHYUSUjrDRhuSS9zOktDYFSnWL6Gohbl7OxzhpIQZ2+ytru6IyOepWpn4pRR6KNtrucl7NmUu+jmHB5w0xBEtUQl5QLGOhgQYeGXMhdrn9lgk=
+
+before_install:
+  - npm config set depth 0
+
+before_script:
+  - make build
+
+script:
+  - rm -rf .git
+  - git init
+  - git config user.name "Alexander Anpleenko"
+  - git config user.email "vaeum@outlook.com"
+  - git add index.html
+  - git add -f dist
+  - git commit -m "Deploy to GitHub Pages"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1
+
+# safelist
+branches:
+  only:
+  - master
